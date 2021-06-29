@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {NativeModules, Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import applicationId from '../applicationid';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -17,7 +18,7 @@ export class LoginScreen extends Component {
           name: '',
           password: '',
         }
-        this.appid = '22823b4a764f9944ad7913ddb3e43cae1';
+        this.appid = applicationId.appid;
     }
 
     loginVisitor = () => {
@@ -78,8 +79,12 @@ export class LoginScreen extends Component {
       KommunicateChat.buildConversation(
         {
           appId: this.appid,
-          kmUser: JSON.stringify(kmUser),
-          clientConversationId: "reytum0001"
+          kmUser: kmUser,
+          isSingleConversation: false,
+          conversationInfo: {
+            "key1": "value1",
+            "key2": "value2"
+          }
         }, (status, message) => {
           console.log("Received while creating conversation, status : " + status + " and message : " + message);
       });

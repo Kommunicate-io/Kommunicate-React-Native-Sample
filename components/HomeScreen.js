@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Platform, NativeModules, Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import applicationId from '../applicationid';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -16,7 +17,7 @@ export class HomeScreen extends Component {
         this.state = {
           welcometext: 'Welcome user.'
         }
-        this.appid = '22823b4a764f9944ad7913ddb3e43cae1';
+        this.appid = applicationId.appid;
     }
 
     componentDidMount() {
@@ -47,7 +48,11 @@ export class HomeScreen extends Component {
       KommunicateChat.buildConversation(
         {
           appId: this.appid, 
-          isSingleConversation: true
+          isSingleConversation: true,
+          conversationMetadata: {
+            'test1': 'value1',
+            'test2': 'value2'
+          }
         }, (status, message) => {
           console.log("Received while creating conversation, status : " + status + " and message : " + message);
       });
@@ -78,6 +83,35 @@ export class HomeScreen extends Component {
       });
     }
 
+    updateConversationAssignee = () => {
+        KommunicateChat.updateConversationAssignee({
+          clientConversationId: "58458073",
+          conversationAssignee: "sunil@applozic.com"}, (success, error) => {
+            console.log("Update conversation assignee, status : " + success + " and message : " + error);
+          });
+    }
+
+    updateTeamId = () => {
+      KommunicateChat.updateTeamId({
+        clientConversationId: "58458073",
+        teamId: "52170696"
+       }, (success, error) => {
+          console.log("Update teamId, status : " + success + " and message : " + error);
+        });
+    }
+
+    updateConversationInfo = () => {
+      KommunicateChat.updateConversationInfo({
+        clientConversationId: "58458073",
+        conversationInfo: {
+          "test1": "value1",
+          "test2": "value2"
+        }
+      }, (success, error) => {
+          console.log("Update conversation info, status : " + success + " and message : " + error);
+        });
+    }
+
     render() {
         return(
             <View style= {styles.maincontainer}>
@@ -87,6 +121,9 @@ export class HomeScreen extends Component {
                 <LinearGradient start={{x:0,y: 0}} end={{x:1,y: 1}} colors={['#43e97b', '#38f9d7']} style={styles.button}><TouchableOpacity style={{padding: 10, alignItems: 'center'}} onPress={this.createConversation}><Text style={{color: 'white'}}>CREATE CONVERSATION</Text></TouchableOpacity></LinearGradient>
                 <LinearGradient start={{x:0,y: 0}} end={{x:1,y: 1}} colors={['#43e97b', '#38f9d7']} style={styles.button}><TouchableOpacity style={{padding: 10, alignItems: 'center'}} onPress={this.openConversation}><Text style={{color: 'white'}}>OPEN CONVERSATION</Text></TouchableOpacity></LinearGradient>
                 <LinearGradient start={{x:0,y: 0}} end={{x:1,y: 1}} colors={['#43e97b', '#38f9d7']} style={styles.button}><TouchableOpacity style={{padding: 10, alignItems: 'center'}} onPress={this.updateUserDetails}><Text style={{color: 'white'}}>UPDATE USER DETAILS</Text></TouchableOpacity></LinearGradient>
+                <LinearGradient start={{x:0,y: 0}} end={{x:1,y: 1}} colors={['#f6d365', '#fda085']} style={styles.button}><TouchableOpacity style={{padding: 10, alignItems: 'center'}} onPress={this.updateConversationAssignee}><Text style={{color: 'white'}}>UPDATE ASSIGNEE</Text></TouchableOpacity></LinearGradient>
+                <LinearGradient start={{x:0,y: 0}} end={{x:1,y: 1}} colors={['#f6d365', '#fda085']} style={styles.button}><TouchableOpacity style={{padding: 10, alignItems: 'center'}} onPress={this.updateTeamId}><Text style={{color: 'white'}}>UPDATE TEAM ID</Text></TouchableOpacity></LinearGradient>
+                <LinearGradient start={{x:0,y: 0}} end={{x:1,y: 1}} colors={['#f6d365', '#fda085']} style={styles.button}><TouchableOpacity style={{padding: 10, alignItems: 'center'}} onPress={this.updateConversationInfo}><Text style={{color: 'white'}}>UPDATE CONVERSATION INFO</Text></TouchableOpacity></LinearGradient>
                 <LinearGradient start={{x:0,y: 0}} end={{x:1,y: 1}} colors={['#f6d365', '#fda085']} style={styles.button}><TouchableOpacity style={{padding: 10, alignItems: 'center'}} onPress={this.logout}><Text style={{color: 'white'}}>LOGOUT</Text></TouchableOpacity></LinearGradient>
                 </View>
             </View>
