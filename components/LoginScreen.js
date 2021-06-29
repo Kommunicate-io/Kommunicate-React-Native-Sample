@@ -79,12 +79,12 @@ export class LoginScreen extends Component {
       KommunicateChat.buildConversation(
         {
           appId: this.appid,
-          kmUser: kmUser,
+          kmUser: JSON.stringify(kmUser),
           isSingleConversation: false,
-          conversationInfo: {
+          conversationInfo: JSON.stringify({
             "key1": "value1",
             "key2": "value2"
-          }
+          })
         }, (status, message) => {
           console.log("Received while creating conversation, status : " + status + " and message : " + message);
       });

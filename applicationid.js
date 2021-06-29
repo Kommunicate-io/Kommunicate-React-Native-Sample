@@ -1,1 +1,3 @@
-{appid:'22823b4a764f9944ad7913ddb3e43cae1'}
+module.exports = {
+    appid:'<Your-App-Id>'
+}
